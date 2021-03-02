@@ -1,0 +1,6 @@
+Pods/
+MoviewTestApp.xcodeproj/xcuserdata/
+MoviewTestApp.xcworkspace/xcuserdata/
+
+*.xcworkspacedata
+MoviewTestApp.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
