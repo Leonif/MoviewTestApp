@@ -22,7 +22,17 @@ struct MoviewResponse: Decodable {
 
 public struct Movie: Decodable {
     public let title: String
-    public let posterImgUrl: String
+    public let originalImgUrl: String
+    public let smallImgUrl: String
+    
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        title = try container.decode(String.self, forKey: .title)
+        let addr = try container.decode(String.self, forKey: .posterImgUrl)
+        originalImgUrl = "https://image.tmdb.org/t/p/original\(addr)"
+        smallImgUrl = "https://image.tmdb.org/t/p/w200\(addr)"
+    }
     
     enum CodingKeys: String, CodingKey {
         case title = "original_title"

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PopularMovieViewController: UIViewController {
     
@@ -54,12 +55,19 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let movie = viewModel.movieList[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cell.textLabel?.text = movie.title
         
+        if let url = URL(string: movie.smallImgUrl) {
+            cell.imageView?.kf.setImage(with: url) { [weak tableView] result in
+                switch result {
+                case .success: tableView?.reloadRows(at: [indexPath], with: .automatic)
+                default: break
+                }
+            }
+        }
         return cell
         
     }
