@@ -12,7 +12,7 @@ public typealias EventHandler<T> = ((T) -> Void)
 
 
 protocol PopularMovieOutput: class {
-    
+    func movieChosen(movie: Movie)
 }
 
 class PopularMovieViewModel {
@@ -31,7 +31,7 @@ class PopularMovieViewModel {
     }
     
     private func loadFilms() {
-        movieService.getPopularFilms(page: 1) { [weak self] (movieList) in
+        movieService.getPopularMovieList(page: 1) { [weak self] (movieList) in
             guard let self = self else { return }
             self.movieList = movieList
             self.eventHandler?(.dataFetched)
@@ -39,8 +39,6 @@ class PopularMovieViewModel {
     }
     
 }
-
-
 
 extension PopularMovieViewModel {
     enum Event {

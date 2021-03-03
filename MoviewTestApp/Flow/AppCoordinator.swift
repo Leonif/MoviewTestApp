@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import MovieModel
 
 protocol CoordinatorInterface: class {
     func start()
@@ -16,29 +17,24 @@ class AppCoordinator: CoordinatorInterface {
     }
     
     func start() {
-        showLoginScreen()
+        showPopularMovieListScreen()
     }
     
-    private func showLoginScreen() {
+    private func showPopularMovieListScreen() {
         let module = PopularMovieAssembler.makeModule()
-//        module.viewModel.output = self
+        module.viewModel.output = self
         
         router?.setRootModule(viewController: module.viewController)
     }
     
-    private func showInterestsScreen() {
-//        let module = InterestsAssembler.makeInterestModule()
-//        module.viewModel.output = self
-//        router?.push(viewController: module.viewController)
+    private func showMovieDetailsScreen(movie: Movie) {
+        let module = MovieDetailsAssembler.makeModule(movie: movie)
+        router?.push(viewController: module.viewController)
     }
 }
 
-//extension AppCoordinator: LoginCoordinatorOutput, InterestsCoordinatorOutput {
-//    func loginFinished() {
-//        showInterestsScreen()
-//    }
-//
-//    func interestFinished() {
-//        router?.back()
-//    }
-//}
+extension AppCoordinator: PopularMovieOutput {
+    func movieChosen(movie: Movie) {
+        showMovieDetailsScreen(movie: movie)
+    }
+}

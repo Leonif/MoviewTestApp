@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class PopularMovieViewController: UIViewController {
+final class PopularMovieViewController: UIViewController {
     
     private let rootView = PopularMovieView()
     private let viewModel: PopularMovieViewModel
@@ -69,6 +69,10 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
             }
         }
         return cell
-        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = viewModel.movieList[indexPath.row]
+        viewModel.output?.movieChosen(movie: movie)
     }
 }

@@ -11,6 +11,7 @@ let apiKey = "1cc33b07c9aa5466f88834f7042c9258"
 
 public enum MovieTraget: TargetType {
     case popular(page: Int)
+    case movieDetails(id: Int)
     
     public var baseURL: URL {
         return URL(string: "https://api.themoviedb.org/3")!
@@ -19,25 +20,30 @@ public enum MovieTraget: TargetType {
     public var path: String {
         switch self {
         case .popular: return "/discover/movie"
+        case let .movieDetails(id): return "/movie/\(id)"
         }
     }
     
     public var method: Moya.Method {
         switch self {
         case .popular: return .get
+        case .movieDetails: return .get
         }
     }
     
     public var sampleData: Data { Data() }
     
     public var task: Task {
+        
+        var parameters: [String: Any] = ["api_key" : apiKey]
+        
         switch self {
         case let .popular(page):
-            let parameters: [String: Any] = [
-                "api_key" : apiKey,
-                "page": page
-            ]
+            parameters["page"] = page
             
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+            
+        case .movieDetails:
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }

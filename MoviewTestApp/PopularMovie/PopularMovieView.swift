@@ -32,7 +32,6 @@ class PopularMovieView: UIView {
         super.updateConstraints()
     }
     
-    
     private func setup() {
         setupSelf()
         setupTableView()
@@ -41,11 +40,11 @@ class PopularMovieView: UIView {
     }
     
     private func setupSelf() {
-        backgroundColor = .red
+        backgroundColor = .white
     }
     
     private func setupTableView() {
-        tableView.backgroundColor = .blue
+        tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(tableView)
     }

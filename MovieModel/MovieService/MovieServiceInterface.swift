@@ -8,5 +8,6 @@
 import Foundation
 
 public protocol MovieServiceInterface {
-    func getPopularFilms(page: Int, callback: @escaping ([Movie]) -> Void)
+    func getPopularMovieList(page: Int, callback: @escaping ([Movie]) -> Void)
+    func getMovieDetails(id: Int, callback: @escaping (Movie) -> Void)
 }
