@@ -25,8 +25,8 @@ public struct Movie: Decodable {
     public let title: String
     public let overview: String
     public let releaseDate: String
-    public let originalImgUrl: String
-    public let smallImgUrl: String
+    public let originalImgUrl: String?
+    public let smallImgUrl: String?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -34,9 +34,13 @@ public struct Movie: Decodable {
         title = try container.decode(String.self, forKey: .title)
         overview = try container.decode(String.self, forKey: .overview)
         releaseDate = try container.decode(String.self, forKey: .releaseDate)
-        let addr = try container.decode(String.self, forKey: .posterImgUrl)
-        originalImgUrl = "https://image.tmdb.org/t/p/original\(addr)"
-        smallImgUrl = "https://image.tmdb.org/t/p/w200\(addr)"
+        if let addr = try container.decodeIfPresent(String.self, forKey: .posterImgUrl) {
+            originalImgUrl = "https://image.tmdb.org/t/p/original\(addr)"
+            smallImgUrl = "https://image.tmdb.org/t/p/w200\(addr)"
+        } else {
+            originalImgUrl = nil
+            smallImgUrl = nil
+        }
     }
     
     enum CodingKeys: String, CodingKey {
@@ -78,6 +82,19 @@ public class MovieService: MovieServiceInterface {
                 } else {
                     debugPrint("impossible parse data")
                 }
+            case let .failure(error):
+                debugPrint(error.localizedDescription)
+            }
+        }
+    }
+    
+    public func searchMovie(query: String, callback: @escaping ([Movie]) -> Void) {
+        let target = MovieTraget.search(query: query)
+        provider.request(target: target) { (result) in
+            switch result {
+            case let .success(response):
+                let movieResponse: MoviewResponse? = response.data.unbox()
+                callback(movieResponse?.results ?? [])
             case let .failure(error):
                 debugPrint(error.localizedDescription)
             }

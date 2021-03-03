@@ -8,7 +8,6 @@
 import UIKit
 
 class PopularMovieView: UIView {
-    
     private(set) var tableView = UITableView()
     
     init() {
@@ -23,9 +22,9 @@ class PopularMovieView: UIView {
     
     override func updateConstraints() {
         NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: self.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         

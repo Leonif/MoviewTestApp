@@ -12,6 +12,9 @@ final class PopularMovieViewController: UIViewController {
     
     private let rootView = PopularMovieView()
     private let viewModel: PopularMovieViewModel
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private let movieCellId = "cell_id"
     
     init(viewModel: PopularMovieViewModel) {
         self.viewModel = viewModel
@@ -32,9 +35,10 @@ final class PopularMovieViewController: UIViewController {
         view = rootView
     }
     
-    
     private func setup() {
-        rootView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        rootView.tableView.register(UITableViewCell.self, forCellReuseIdentifier: movieCellId)
+        
+        setupSearchController()
     }
     
     private func setupBinding() {
@@ -47,6 +51,13 @@ final class PopularMovieViewController: UIViewController {
             }
         }
     }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
 }
 
 extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource {
@@ -57,13 +68,16 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let movie = viewModel.movieList[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: movieCellId)!
         cell.textLabel?.text = movie.title
         
-        if let url = URL(string: movie.smallImgUrl) {
+        if let url = URL(string: movie.smallImgUrl ?? "") {
             cell.imageView?.kf.setImage(with: url) { [weak tableView] result in
                 switch result {
-                case .success: tableView?.reloadRows(at: [indexPath], with: .automatic)
+                case .success:
+                    if indexPath.row < tableView?.visibleCells.count ?? 0 {
+                        tableView?.reloadRows(at: [indexPath], with: .none)
+                    }
                 default: break
                 }
             }
@@ -74,5 +88,14 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = viewModel.movieList[indexPath.row]
         viewModel.output?.movieChosen(movie: movie)
+    }
+}
+
+
+extension PopularMovieViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard searchController.isActive else { return }
+        
+        viewModel.filter = searchController.searchBar.text
     }
 }

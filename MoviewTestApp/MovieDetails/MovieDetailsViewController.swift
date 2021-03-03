@@ -58,6 +58,6 @@ final class MovieDetailsViewController: UIViewController {
         rootView.titleLabel.text = viewModel.movie.title
         rootView.overviewLabel.text = viewModel.movie.overview
         rootView.relaseLabel.text = viewModel.movie.releaseDate
-        rootView.posteImageView.kf.setImage(with: URL(string: viewModel.movie.originalImgUrl))
+        rootView.posteImageView.kf.setImage(with: URL(string: viewModel.movie.originalImgUrl ?? ""))
     }
 }
