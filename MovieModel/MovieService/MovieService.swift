@@ -60,7 +60,7 @@ public class MovieService: MovieServiceInterface {
     }
     
     public func getPopularMovieList(page: Int, callback: @escaping ([Movie]) -> Void) {
-        let target = MovieTraget.popular(page: 1)
+        let target = MovieTraget.popular(page: page)
         provider.request(target: target) { (result) in
             switch result {
             case let .success(response):

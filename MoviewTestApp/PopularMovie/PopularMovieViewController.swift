@@ -48,8 +48,23 @@ final class PopularMovieViewController: UIViewController {
         viewModel.eventHandler = { [unowned self] event in
             switch event {
             case .dataFetched: rootView.tableView.reloadData()
+            case let .nextPageFetched(lastCount, batch):
+                insertNewPage(lastCount: lastCount, batch: batch)
             }
         }
+    }
+    
+    
+    private func insertNewPage(lastCount: Int, batch: Int) {
+        var indexPath: [IndexPath] = []
+        
+        let newLastRow = lastCount + batch
+        
+        for row in lastCount..<newLastRow {
+            indexPath.append(.init(row: row, section: 0))
+        }
+        
+        rootView.tableView.insertRows(at: indexPath, with: .automatic)
     }
     
     private func setupSearchController() {
@@ -88,6 +103,13 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = viewModel.movieList[indexPath.row]
         viewModel.output?.movieChosen(movie: movie)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if !searchController.isActive, indexPath.row == viewModel.movieList.count - 2 {
+            viewModel.loadNextPage()
+        }
     }
 }
 
