@@ -28,7 +28,6 @@ final class PopularMovieViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func loadView() {
         super.loadView()
         
@@ -54,7 +53,6 @@ final class PopularMovieViewController: UIViewController {
         }
     }
     
-    
     private func insertNewPage(lastCount: Int, batch: Int) {
         var indexPath: [IndexPath] = []
         
@@ -70,6 +68,7 @@ final class PopularMovieViewController: UIViewController {
     private func setupSearchController() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.backgroundColor = UIColor.backgroundColor
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }

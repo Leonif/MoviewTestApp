@@ -39,11 +39,11 @@ class PopularMovieView: UIView {
     }
     
     private func setupSelf() {
-        backgroundColor = .white
+        backgroundColor = UIColor.backgroundColor
     }
     
     private func setupTableView() {
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = UIColor.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(tableView)
     }

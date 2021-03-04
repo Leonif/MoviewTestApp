@@ -57,7 +57,9 @@ class MovieDetailsView: ScrollableView {
     
     
     private func setup() {
-        backgroundColor = .red
+        contentView.backgroundColor = UIColor.backgroundColor
+        scrollView.backgroundColor = UIColor.backgroundColor
+        
         setupTitleLabel()
         setupOverviewLabel()
         setupReleaseLabel()
@@ -70,7 +72,7 @@ class MovieDetailsView: ScrollableView {
     private func setupTitleLabel() {
         titleLabel.font = UIFont.systemFont(ofSize: 32)
         titleLabel.numberOfLines = 0
-        titleLabel.textColor = .black
+        titleLabel.textColor = UIColor.textColor
         titleLabel.textAlignment = .center
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +82,7 @@ class MovieDetailsView: ScrollableView {
     private func setupOverviewLabel() {
         overviewLabel.font = UIFont.systemFont(ofSize: 15)
         overviewLabel.numberOfLines = 0
-        overviewLabel.textColor = .black
+        overviewLabel.textColor = UIColor.textColor
         overviewLabel.textAlignment = .center
         overviewLabel.lineBreakMode = .byWordWrapping
         overviewLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +92,7 @@ class MovieDetailsView: ScrollableView {
     private func setupReleaseLabel() {
         relaseLabel.font = UIFont.systemFont(ofSize: 15)
         relaseLabel.numberOfLines = 0
-        relaseLabel.textColor = .black
+        relaseLabel.textColor = UIColor.textColor
         relaseLabel.textAlignment = .center
         relaseLabel.lineBreakMode = .byWordWrapping
         relaseLabel.translatesAutoresizingMaskIntoConstraints = false
