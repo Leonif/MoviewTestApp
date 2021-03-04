@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		330E43B525F0EB8500073818 /* MoviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E43B425F0EB8500073818 /* MoviewResponse.swift */; };
+		330E43B825F0EB9F00073818 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E43B725F0EB9F00073818 /* Movie.swift */; };
+		330E43BE25F0F07500073818 /* EventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 330E43BD25F0F07500073818 /* EventHandler.swift */; };
 		336D0FAB25EE8D1700D29DF5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336D0FAA25EE8D1700D29DF5 /* AppDelegate.swift */; };
 		336D0FAD25EE8D1700D29DF5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336D0FAC25EE8D1700D29DF5 /* SceneDelegate.swift */; };
 		336D0FB425EE8D1B00D29DF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 336D0FB325EE8D1B00D29DF5 /* Assets.xcassets */; };
@@ -59,6 +62,9 @@
 
 /* Begin PBXFileReference section */
 		051F048BC14AB3AFA7ABA779 /* Pods_MoviewTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoviewTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		330E43B425F0EB8500073818 /* MoviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviewResponse.swift; sourceTree = "<group>"; };
+		330E43B725F0EB9F00073818 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		330E43BD25F0F07500073818 /* EventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventHandler.swift; sourceTree = "<group>"; };
 		336D0FA725EE8D1700D29DF5 /* MoviewTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviewTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		336D0FAA25EE8D1700D29DF5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		336D0FAC25EE8D1700D29DF5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +137,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		330E43BA25F0EBBB00073818 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				330E43B725F0EB9F00073818 /* Movie.swift */,
+				330E43B425F0EB8500073818 /* MoviewResponse.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		336D0F9E25EE8D1700D29DF5 = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				33E4B0D025EFAC8600B3256A /* ScrollableView.swift */,
+				330E43BD25F0F07500073818 /* EventHandler.swift */,
 				336D0FAA25EE8D1700D29DF5 /* AppDelegate.swift */,
 				336D0FAC25EE8D1700D29DF5 /* SceneDelegate.swift */,
 				336D0FB325EE8D1B00D29DF5 /* Assets.xcassets */,
@@ -200,6 +216,7 @@
 			children = (
 				33E4B07525EE9B7500B3256A /* MovieModel.h */,
 				33E4B07625EE9B7500B3256A /* Info.plist */,
+				330E43BA25F0EBBB00073818 /* Entities */,
 				33E4B0B125EF813500B3256A /* MovieService */,
 				33E4B09725EE9EE100B3256A /* NetworkProvider.swift */,
 			);
@@ -407,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				336D0FC625EE8E5300D29DF5 /* AppCoordinator.swift in Sources */,
+				330E43BE25F0F07500073818 /* EventHandler.swift in Sources */,
 				33E4B0D125EFAC8600B3256A /* ScrollableView.swift in Sources */,
 				336D0FD425EE900700D29DF5 /* PopularMovieViewModel.swift in Sources */,
 				33E4B05025EE92AA00B3256A /* PopularMovieViewController.swift in Sources */,
@@ -428,8 +446,10 @@
 			files = (
 				33E4B09525EE9DD600B3256A /* MovieService.swift in Sources */,
 				33E4B0AF25EF812D00B3256A /* MovieServiceInterface.swift in Sources */,
+				330E43B825F0EB9F00073818 /* Movie.swift in Sources */,
 				33E4B09825EE9EE100B3256A /* NetworkProvider.swift in Sources */,
 				33E4B0B425EF819400B3256A /* MovieTarget.swift in Sources */,
+				330E43B525F0EB8500073818 /* MoviewResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

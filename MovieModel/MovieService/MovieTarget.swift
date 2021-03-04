@@ -12,7 +12,7 @@ let apiKey = "1cc33b07c9aa5466f88834f7042c9258"
 public enum MovieTraget: TargetType {
     case popular(page: Int)
     case movieDetails(id: Int)
-    case search(query: String)
+    case search(query: String, page: Int)
     
     public var baseURL: URL {
         return URL(string: "https://api.themoviedb.org/3")!
@@ -49,8 +49,9 @@ public enum MovieTraget: TargetType {
         case .movieDetails:
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
        
-        case let .search(query):
+        case let .search(query, page):
             parameters["query"] = query
+            parameters["page"] = page
             return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }

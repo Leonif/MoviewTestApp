@@ -107,8 +107,13 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
-        if !searchController.isActive, indexPath.row == viewModel.movieList.count - 2 {
-            viewModel.loadNextPage()
+        if indexPath.row == viewModel.movieList.count - 1 {
+            if searchController.isActive {
+                viewModel.loadNextFoundPage()
+            } else {
+                viewModel.loadNextPage()
+            }
+            
         }
     }
 }

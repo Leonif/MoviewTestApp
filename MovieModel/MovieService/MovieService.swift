@@ -7,51 +7,6 @@
 
 import Moya
 
-struct MoviewResponse: Decodable {
-    let page: Int
-    let results: [Movie]
-    let totalPages, totalResults: Int
-
-    enum CodingKeys: String, CodingKey {
-        case page, results
-        case totalPages = "total_pages"
-        case totalResults = "total_results"
-    }
-}
-
-
-public struct Movie: Decodable {
-    public let id: Int
-    public let title: String
-    public let overview: String
-    public let releaseDate: String
-    public let originalImgUrl: String?
-    public let smallImgUrl: String?
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(Int.self, forKey: .id)
-        title = try container.decode(String.self, forKey: .title)
-        overview = try container.decode(String.self, forKey: .overview)
-        releaseDate = try container.decode(String.self, forKey: .releaseDate)
-        if let addr = try container.decodeIfPresent(String.self, forKey: .posterImgUrl) {
-            originalImgUrl = "https://image.tmdb.org/t/p/original\(addr)"
-            smallImgUrl = "https://image.tmdb.org/t/p/w200\(addr)"
-        } else {
-            originalImgUrl = nil
-            smallImgUrl = nil
-        }
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case title = "original_title"
-        case posterImgUrl = "poster_path"
-        case overview
-        case releaseDate = "release_date"
-    }
-}
-
 public class MovieService: MovieServiceInterface {
     private let provider: NetworkProvider<MovieTraget>
     
@@ -59,13 +14,16 @@ public class MovieService: MovieServiceInterface {
         self.provider = provider
     }
     
-    public func getPopularMovieList(page: Int, callback: @escaping ([Movie]) -> Void) {
+    public func getPopularMovieList(page: Int, callback: @escaping ([Movie], Int) -> Void) {
         let target = MovieTraget.popular(page: page)
         provider.request(target: target) { (result) in
             switch result {
             case let .success(response):
-                let movieResponse: MoviewResponse? = response.data.unbox()
-                callback(movieResponse?.results ?? [])
+                let response: MoviewResponse? = response.data.unbox()
+                
+                guard let movieResponse = response  else { callback([], 0); return  }
+                
+                callback(movieResponse.results, movieResponse.totalPages)
             case let .failure(error):
                 debugPrint(error.localizedDescription)
             }
@@ -88,13 +46,16 @@ public class MovieService: MovieServiceInterface {
         }
     }
     
-    public func searchMovie(query: String, callback: @escaping ([Movie]) -> Void) {
-        let target = MovieTraget.search(query: query)
+    public func searchMovie(query: String, page: Int, callback: @escaping ([Movie], Int) -> Void) {
+        let target = MovieTraget.search(query: query, page: page)
         provider.request(target: target) { (result) in
             switch result {
             case let .success(response):
-                let movieResponse: MoviewResponse? = response.data.unbox()
-                callback(movieResponse?.results ?? [])
+                let response: MoviewResponse? = response.data.unbox()
+                
+                guard let movieResponse = response  else { callback([], 0); return  }
+                
+                callback(movieResponse.results, movieResponse.totalPages)
             case let .failure(error):
                 debugPrint(error.localizedDescription)
             }
