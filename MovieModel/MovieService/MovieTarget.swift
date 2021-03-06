@@ -63,12 +63,8 @@ public enum MovieTraget: TargetType {
 
 extension MovieTraget: CachePolicyGettable {
     var cachePolicy: URLRequest.CachePolicy {
-        switch self {
-        case .popular:
             return .reloadIgnoringLocalCacheData
-
-        default:
-            return .useProtocolCachePolicy
-        }
+//            return .useProtocolCachePolicy
+    
     }
 }

@@ -12,6 +12,7 @@ final class MovieDetailsViewController: UIViewController {
     
     private let rootView = MovieDetailsView()
     private let viewModel: MovieDetailsViewModel
+    private let imageLoader = ImageLoader()
     
     init(viewModel: MovieDetailsViewModel) {
         self.viewModel = viewModel
@@ -38,7 +39,6 @@ final class MovieDetailsViewController: UIViewController {
         view = rootView
     }
     
-    
     private func setup() {
         
     }
@@ -58,6 +58,10 @@ final class MovieDetailsViewController: UIViewController {
         rootView.titleLabel.text = viewModel.movie.title
         rootView.overviewLabel.text = viewModel.movie.overview
         rootView.relaseLabel.text = viewModel.movie.releaseDate
-        rootView.posteImageView.kf.setImage(with: URL(string: viewModel.movie.originalImgUrl ?? ""))
+        imageLoader.imageView = rootView.posterImageView
+        
+        if let url = URL(string: viewModel.movie.originalImgUrl ?? "") {
+            imageLoader.load(url: url)
+        }
     }
 }

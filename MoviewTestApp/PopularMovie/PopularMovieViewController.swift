@@ -13,6 +13,7 @@ final class PopularMovieViewController: UIViewController {
     private let rootView = PopularMovieView()
     private let viewModel: PopularMovieViewModel
     private let searchController = UISearchController(searchResultsController: nil)
+    private let imageLoader = ImageLoader()
     
     private let movieCellId = "cell_id"
     
@@ -86,13 +87,10 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
         cell.textLabel?.text = movie.title
         
         if let url = URL(string: movie.smallImgUrl ?? "") {
-            cell.imageView?.kf.setImage(with: url) { [weak tableView] result in
-                switch result {
-                case .success:
-                    if indexPath.row < tableView?.visibleCells.count ?? 0 {
-                        tableView?.reloadRows(at: [indexPath], with: .none)
-                    }
-                default: break
+            imageLoader.imageView = cell.imageView
+            imageLoader.load(url: url) { [weak tableView] in
+                if indexPath.row < tableView?.visibleCells.count ?? 0 {
+                    tableView?.reloadRows(at: [indexPath], with: .none)
                 }
             }
         }

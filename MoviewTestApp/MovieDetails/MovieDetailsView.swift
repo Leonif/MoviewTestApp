@@ -12,7 +12,7 @@ class MovieDetailsView: ScrollableView {
     private(set) var titleLabel = UILabel()
     private(set) var overviewLabel = UILabel()
     private(set) var relaseLabel = UILabel()
-    private(set) var posteImageView = UIImageView()
+    private(set) var posterImageView = UIImageView()
     
     init() {
         super.init(frame: .zero)
@@ -45,11 +45,11 @@ class MovieDetailsView: ScrollableView {
         ])
         
         NSLayoutConstraint.activate([
-            posteImageView.topAnchor.constraint(equalTo: relaseLabel.bottomAnchor, constant: 16),
-            posteImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            posteImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            posteImageView.heightAnchor.constraint(equalToConstant: 700),
-            posteImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            posterImageView.topAnchor.constraint(equalTo: relaseLabel.bottomAnchor, constant: 16),
+            posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            posterImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            posterImageView.heightAnchor.constraint(equalToConstant: 700),
+            posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
         
         super.updateConstraints()
@@ -100,10 +100,10 @@ class MovieDetailsView: ScrollableView {
     }
     
     private func setupImageView() {
-        posteImageView.contentMode = .scaleAspectFill
-        posteImageView.clipsToBounds = true
-        posteImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(posteImageView)
+        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.clipsToBounds = true
+        posterImageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(posterImageView)
     }
 }
 
