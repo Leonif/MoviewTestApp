@@ -28,6 +28,15 @@ public struct Movie: Decodable {
         }
     }
     
+    public init(object: MovieObject) {
+        self.id = Int(object.id)
+        self.title = object.title ?? ""
+        self.overview = object.overview ?? ""
+        self.releaseDate = object.releaseDate ?? ""
+        self.originalImgUrl = object.originalImgUrl
+        self.smallImgUrl = object.smallImgUrl
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id
         case title = "original_title"

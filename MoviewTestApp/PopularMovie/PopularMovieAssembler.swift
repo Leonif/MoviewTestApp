@@ -7,14 +7,16 @@
 
 import MovieModel
 
-
-
 class  PopularMovieAssembler {
     static func makeModule() -> (viewController: PopularMovieViewController, viewModel: PopularMovieViewModel) {
         
         let networkService = NetworkProvider<MovieTraget>()
         
-        let viewModel = PopularMovieViewModel(movieService: MovieService(provider: networkService))
+        let persistanceProvider = PersistanceFactory.persistanceProvider
+        
+        let service = MovieService(provider: networkService, persistanceProvider: persistanceProvider)
+        
+        let viewModel = PopularMovieViewModel(movieService: service)
         let viewController = PopularMovieViewController(viewModel: viewModel)
         
         return (viewController, viewModel)
