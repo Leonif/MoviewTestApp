@@ -6,7 +6,6 @@
 //
 
 import CoreData
-import UIKit
 
 public typealias Persistanble = NSManagedObject
 
@@ -77,9 +76,5 @@ public class PersistenceProvider: PitchPersistenceProviderInterface {
         } catch {
             fatalError("\(Entity.entityName) removing error")
         }
-    }
-    
-    public func saveImage(image: UIImage) -> String {
-        fatalError("saveImage(image:) has not been implemented")
     }
 }
