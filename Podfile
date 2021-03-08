@@ -4,8 +4,6 @@
 target 'MoviewTestApp' do
   use_frameworks!
 
-  pod 'Kingfisher', '~> 6.0'
-
 end
 
 target 'MovieModel' do

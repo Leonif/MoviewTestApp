@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class PopularMovieViewController: UIViewController {
     
@@ -85,12 +84,18 @@ extension PopularMovieViewController: UITableViewDelegate, UITableViewDataSource
         
         let cell = tableView.dequeueReusableCell(withIdentifier: movieCellId)!
         cell.textLabel?.text = movie.title
-        
+        cell.imageView?.image = nil
         if let url = URL(string: movie.smallImgUrl ?? "") {
-            imageLoader.imageView = cell.imageView
-            imageLoader.load(url: url) { [weak tableView] in
-                if indexPath.row < tableView?.visibleCells.count ?? 0 {
-                    tableView?.reloadRows(at: [indexPath], with: .none)
+            
+            if let image = imageLoader.readCahedImage(url: url) {
+                cell.imageView?.image = image
+                cell.setNeedsLayout()
+            } else {
+                imageLoader.reusableLoad(url: url, indexPath: indexPath) { [weak tableView] image, idx in
+                    if let idx = idx, let cellToUpdate = tableView?.cellForRow(at: idx) {
+                        cellToUpdate.imageView?.image = image
+                        cellToUpdate.setNeedsLayout()
+                    }
                 }
             }
         }

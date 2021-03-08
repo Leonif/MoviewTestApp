@@ -100,7 +100,7 @@ class MovieDetailsView: ScrollableView {
     }
     
     private func setupImageView() {
-        posterImageView.contentMode = .scaleAspectFill
+        posterImageView.contentMode = .scaleAspectFit
         posterImageView.clipsToBounds = true
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(posterImageView)

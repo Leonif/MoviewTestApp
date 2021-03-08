@@ -16,10 +16,7 @@ final class MovieDetailsViewController: UIViewController {
     
     init(viewModel: MovieDetailsViewModel) {
         self.viewModel = viewModel
-        
         super.init(nibName: .none, bundle: .none)
-        setup()
-        
     }
     
     override func viewDidLoad() {
@@ -39,12 +36,7 @@ final class MovieDetailsViewController: UIViewController {
         view = rootView
     }
     
-    private func setup() {
-        
-    }
-    
     private func setupBinding() {
-        
         updateUI(for: viewModel.movie)
         
         viewModel.eventHandler = { [unowned self] event in
@@ -55,13 +47,31 @@ final class MovieDetailsViewController: UIViewController {
     }
     
     private func updateUI(for movie: Movie) {
-        rootView.titleLabel.text = viewModel.movie.title
-        rootView.overviewLabel.text = viewModel.movie.overview
-        rootView.relaseLabel.text = viewModel.movie.releaseDate
-        imageLoader.imageView = rootView.posterImageView
+        rootView.titleLabel.text = movie.title
+        rootView.overviewLabel.text = movie.overview
+        rootView.relaseLabel.text = movie.releaseDate
         
-        if let url = URL(string: viewModel.movie.originalImgUrl ?? "") {
-            imageLoader.load(url: url)
+        if let url = URL(string: movie.originalImgUrl ?? "") {
+            rootView.posterImageView.image = getPlaceholder(for: movie)
+            
+            imageLoader.load(url: url) { [weak self] image in
+                self?.rootView.posterImageView.image = image
+            }
         }
+    }
+    
+    private func getPlaceholder(for movie: Movie) -> UIImage? {
+        if let urlString = movie.originalImgUrl, let url1 = URL(string: urlString),
+           let placeholder = imageLoader.readCahedImage(url: url1) {
+            
+            return placeholder
+        
+        } else if let urlString = movie.smallImgUrl, let url2 = URL(string: urlString),
+             let placeholder = imageLoader.readCahedImage(url: url2) {
+        
+            return placeholder
+        }
+        
+        return .none
     }
 }
